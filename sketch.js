@@ -71,6 +71,9 @@ and the current player should take the random player.
 
 */
 
+import { minimax } from './minimax.js';
+import { Node } from './node.js';
+
 let board=[
     ['','',''],
     ['','',''],
@@ -87,11 +90,37 @@ let board=[
   
   function setup() {
     createCanvas(400, 400);
-    root = new Node(board.map(row => [...row])); 
+    noLoop();
+    background(255);
+    let initialBoard=[
+      ['', '', ''],
+      ['', '', ''],
+      ['', '', '']
+    ];
+    let rootNode=new Node(initialBoard);
+    minimax(initialBoard, 0, true, rootNode);
+    drawTree(rootNode,width/2,30,120,1);
     w=width/3;
     h=height/3;
     // here have to be function that called bestMove();
     bestMove();
+  }
+  function drawTree(node,x,y,branchWidth,level){
+   textAligen(CENTER,CENTER);
+   if(node){
+   fill(0);
+   noStroke();
+   text(node.value.map(row => row.join(' ')).join('\n'), x, y);
+   stroke(0);
+   let angle=PI/4;
+   let depth=40;
+   node.children.forEach((child,i)=>{
+   let newX=x+branchWidth*cos(angle*i);
+   let newY=y+depth;
+   line(x,y,newX,newY);
+   drawTree(child,newX,newY,branchWidth*0.5,level+i); 
+   });
+   } 
   }
   
   function equals3(a,b,c){
@@ -153,26 +182,12 @@ let board=[
      }
    } 
   }
-  function drawTree(node, x, y, angle, depth) {
-    if (depth > 5) return;  // Limit the depth for clarity
-    ellipse(x, y, 20, 20);
-    textSize(10);
-    text(node.value, x-10, y+3); // Display some node value
   
-    let angleDecrement = PI / 8;
-    let offset = 100 / (depth + 1); // Reduce offset with depth to avoid overlap
-    for (let i = 0; i < node.children.length; i++) {
-      let newX = x + cos(angle - angleDecrement + 2 * angleDecrement * i / (node.children.length - 1)) * offset;
-      let newY = y + sin(angle - angleDecrement + 2 * angleDecrement * i / (node.children.length - 1)) * offset;
-      line(x, y, newX, newY);
-      drawTree(node.children[i], newX, newY, angle - PI / 4 + PI / 2 * i / (node.children.length - 1), depth + 1);
-    }
-  }
   
   
   function draw() {
     background(220);
-    darwTree(root,width/2,20,PI/2,0);
+    drawTree(root,width/2,20,PI/2,0);
     strokeWeight(4);
     line(w,0,w,height);
     line(w*2,0,w*2,height);

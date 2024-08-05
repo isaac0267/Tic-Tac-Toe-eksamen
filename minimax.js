@@ -4,14 +4,8 @@
  *
  */
 
+import { Node } from "./node.js";
 
-function Node(value) {
-  this.value = value;
-  this.children = [];
-}
-
-
-let root; // This will be the root node for my tree. 
 function bestMove() {
   // AI to make this turn
   let bestScore = -Infinity;
@@ -49,8 +43,8 @@ function bestMove() {
     O: -1,
     tie: 0,
   };
-  
-/**
+
+  /**
  *  // what we want to before this, to see if somebody is wining or not.
     // we make a function that called checkWinner.
     // if the result is not equal with null, the result is assositate with scores result in line 39
@@ -58,14 +52,12 @@ function bestMove() {
     // if i am calling this on specific board configuration at this partical depth and it is
     // end stat just return the score
     // This function is recursive function and it will call it self all time.
- */ 
-  function minimax(board, depth, isMaximizing,node) {
-    console.log(`Depth: ${depth} | Board State:`, board.map(row => row.join(' ')));
+ */
+  function minimax(board, depth, isMaximizing, node) {
     let result = checkWinner();
     if (result !== null) {
-      console.log(`Result: ${result} at depth ${depth}`);
-       //let score = scores[result];
-       //return score;
+      //let score = scores[result];
+      //return score;
       //return scores[result];
     }
     // here we want to find to best score.
@@ -79,9 +71,9 @@ function bestMove() {
           // is the spot are avalibale? her we are trying to check all the possiable move.
           if (board[i][j] == "") {
             board[i][j] = ai;
-            let childNode = new Node(board.map(row => [...row])); // Clone the board for the tree
+            let childNode = new Node(board.map((row) => [...row])); // Clone the board for the tree
             node.children.push(childNode);
-            let score = minimax(board, depth + 1, false,childNode);
+            let score = minimax(board, depth + 1, false, childNode);
             board[i][j] = "";
             bestScore = Math.max(score, bestScore);
           }
@@ -96,9 +88,9 @@ function bestMove() {
           // is the spot are avalibale? her we are trying to check all the possiable move.
           if (board[i][j] == "") {
             board[i][j] = human;
-            let childNode=new Node(board.map(row=>[...row])); // clone the board for tree
+            let childNode = new Node(board.map((row) => [...row])); // clone the board for tree
             node.children.push(childNode);
-            let score = minimax(board, depth + 1, true,childNode);
+            let score = minimax(board, depth + 1, true, childNode);
             board[i][j] = "";
             bestScore = Math.min(score, bestScore);
           }
@@ -108,4 +100,3 @@ function bestMove() {
     }
   }
 }
-
