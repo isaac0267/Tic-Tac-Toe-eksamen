@@ -56,8 +56,9 @@ function bestMove() {
     if (result !== null) {
        //let score = scores[result];
        //return score;
-      return scores[result];
+       //return scores[result];
     }
+
     // here we want to find to best score.
     // what this coding under is doing? is finding the best score for all the possiable next
     // trun by the AI player. or if is not AI player, it is minimazing player we can do the same thing
