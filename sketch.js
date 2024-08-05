@@ -87,6 +87,7 @@ let board=[
   
   function setup() {
     createCanvas(400, 400);
+    root = new Node(board.map(row => [...row])); 
     w=width/3;
     h=height/3;
     // here have to be function that called bestMove();
@@ -152,9 +153,26 @@ let board=[
      }
    } 
   }
+  function drawTree(node, x, y, angle, depth) {
+    if (depth > 5) return;  // Limit the depth for clarity
+    ellipse(x, y, 20, 20);
+    textSize(10);
+    text(node.value, x-10, y+3); // Display some node value
+  
+    let angleDecrement = PI / 8;
+    let offset = 100 / (depth + 1); // Reduce offset with depth to avoid overlap
+    for (let i = 0; i < node.children.length; i++) {
+      let newX = x + cos(angle - angleDecrement + 2 * angleDecrement * i / (node.children.length - 1)) * offset;
+      let newY = y + sin(angle - angleDecrement + 2 * angleDecrement * i / (node.children.length - 1)) * offset;
+      line(x, y, newX, newY);
+      drawTree(node.children[i], newX, newY, angle - PI / 4 + PI / 2 * i / (node.children.length - 1), depth + 1);
+    }
+  }
+  
   
   function draw() {
     background(220);
+    darwTree(root,width/2,20,PI/2,0);
     strokeWeight(4);
     line(w,0,w,height);
     line(w*2,0,w*2,height);
@@ -171,6 +189,13 @@ let board=[
       noFill();
       ellipse(x,y,r*2);
     }else if(spot==ai){
+      fill(255,0,0,100);
+      ellipse(x,y,r*2);
+      setTimeout(()=>{
+        fill(255);
+        line(x-r,y-r,x+r,y+r);
+        line(x+r,y+r,x-r,y+r)
+      },1000);
      line(x-r,y-r,x+r,y+r);
      line(x+2,y-r,x-r,y+r); 
     }  
