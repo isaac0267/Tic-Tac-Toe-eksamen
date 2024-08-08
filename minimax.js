@@ -36,13 +36,14 @@ function bestMove() {
   // So if the x is winning is 1, if the O -1 and tie is zero
   // The code below is showing the senario of our table.
 
-  let scores = {
-    x: 1,
-    O: -1,
-    tie: 0,
-  };
-  
-/**
+ let scores = {
+    'X': 1,
+    'O': -1,
+    'tie': 0
+};
+
+
+  /**
  *  // what we want to before this, to see if somebody is wining or not.
     // we make a function that called checkWinner.
     // if the result is not equal with null, the result is assositate with scores result in line 39
@@ -50,13 +51,13 @@ function bestMove() {
     // if i am calling this on specific board configuration at this partical depth and it is
     // end stat just return the score
     // This function is recursive function and it will call it self all time.
- */ 
+ */
   function minimax(board, depth, isMaximizing) {
     let result = checkWinner();
     if (result !== null) {
-       //let score = scores[result];
-       //return score;
-      //return scores[result];
+      let score = scores[result];
+      //return score;
+      return scores[result];
     }
     // here we want to find to best score.
     // what this coding under is doing? is finding the best score for all the possiable next
@@ -94,4 +95,3 @@ function bestMove() {
     }
   }
 }
-
