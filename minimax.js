@@ -55,9 +55,9 @@ function bestMove() {
   function minimax(board, depth, isMaximizing) {
     let result = checkWinner();
     if (result !== null) {
-      let score = scores[result];
+     // let score = scores[result];
       //return score;
-      return scores[result];
+     //return scores[result];
     }
     // here we want to find to best score.
     // what this coding under is doing? is finding the best score for all the possiable next
