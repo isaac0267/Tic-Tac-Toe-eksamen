@@ -52,7 +52,7 @@ function bestMove() {
     // end stat just return the score
     // This function is recursive function and it will call it self all time.
  */
-  function minimax(board, depth, isMaximizing) {
+  function minimax(board, depth) {
     let result = checkWinner();
     if (result !== null) {
      // let score = scores[result];
